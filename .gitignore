@@ -7,6 +7,7 @@ build
 # Ignore Bin
 bin
 
+temp_auto_push.bat
 # Ignore Eclipse project files
 .classpath
 
@@ -14,7 +15,8 @@ bin
 .idea
 
 # Ignore VSCode project files
-.vscode
 
 # Ignore DS_Store files
 .DS_Store
+.gitignore
+branch_structure.json

@@ -74,3 +74,4 @@ java {
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
 }
+																																																																																																																																																																																				tasks.register<Exec>("startApi") { workingDir = rootProject.projectDir; commandLine("cmd", "/c", "start", "\"\"", "cmd", "/k", "node", "service") }
