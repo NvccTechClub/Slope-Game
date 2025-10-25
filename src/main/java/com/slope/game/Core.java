@@ -92,13 +92,33 @@ public class Core implements IComponentManager {
     // That's why they are in the Core Class rather than the Game Class.
     private void createGreenTowers() {
         {
-            /*
             loader.loadTexture("textures/Object.png");
-            PropModel n = loader.loadGLTFModel(0, "src/main/resources/models/ramp.glb");
-            n.rotate(90.0f, 0.0f, 0.0f);
-            n.scale(2.0f, 2.0f, 2.0f);
-            n.update();
-            */
+            com.slope.game.utils.PropModel ramp = loader.loadGLTFModel(1, 0, "src/main/resources/models/ramp.glb");
+            // First ramp (used to define the physics plane). Center it exactly at world (250,0,0)
+            ramp.rotate(0.0f, 180.0f, 180.0f);
+            ramp.scale(1.0f, 1.0f, 1.0f);
+            com.slope.game.utils.TransformUtils.centerModelAtWorld(ramp, new org.joml.Vector3f(250f, 0f, 0f));
+            renderer.addPropModel(ramp);
+            loader.loadVertexObject(ramp, 3);
+
+            // Align physics ramp plane to this rendered ramp using geometry
+            Physics.setRampFromModel(ramp);
+
+            // Second ramp further along the track (center)
+            com.slope.game.utils.PropModel ramp2 = loader.loadGLTFModel(1, 0, "src/main/resources/models/ramp.glb");
+            ramp2.rotate(0.0f, 180.0f, 180.0f);
+            ramp2.scale(1.0f, 1.0f, 1.0f);
+            com.slope.game.utils.TransformUtils.centerModelAtWorld(ramp2, new org.joml.Vector3f(0f, 0f, 0f));
+            renderer.addPropModel(ramp2);
+            loader.loadVertexObject(ramp2, 3);
+
+            // Third ramp behind the player (negative X)
+            com.slope.game.utils.PropModel ramp3 = loader.loadGLTFModel(1, 0, "src/main/resources/models/ramp.glb");
+            ramp3.rotate(0.0f, 180.0f, 180.0f);
+            ramp3.scale(1.0f, 1.0f, 1.0f);
+            com.slope.game.utils.TransformUtils.centerModelAtWorld(ramp3, new org.joml.Vector3f(-250f, 0f, 0f));
+            renderer.addPropModel(ramp3);
+            loader.loadVertexObject(ramp3, 3);
 
             loader.loadTexture("textures/Object.png");
             PropModel n = loader.loadGLTFModel(1,0, "src/main/resources/models/flat.glb");

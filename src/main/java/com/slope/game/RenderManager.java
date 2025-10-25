@@ -1,9 +1,8 @@
 package com.slope.game;
 
+import java.util.ArrayList;
 import java.util.Locale;
-import org.lwjgl.opengl.*;
-import java.util.Locale;
-import org.joml.Matrix4f;
+
 import org.joml.Vector2f;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
@@ -12,9 +11,9 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL21;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.opengl.GL31;
-import org.lwjgl.opengl.GL33;
 import static org.lwjgl.opengl.GL31.GL_UNIFORM_BUFFER;
-import java.util.ArrayList;
+import org.lwjgl.opengl.GL33;
+
 import com.slope.game.utils.PropModel;
 
 public final class RenderManager {
@@ -170,6 +169,8 @@ public final class RenderManager {
             shaderManager.setVec2Uniform("iResolution", resolution);
             shaderManager.setVec3Uniform("camPosition", camMatrices.getPosition());
             shaderManager.setVec3Uniform("position", Physics.getPosition());
+            org.joml.Quaternionf q = Physics.getOrientation();
+            shaderManager.setVec4Uniform("sphereOrientation", new org.joml.Vector4f(q.x, q.y, q.z, q.w));
         }
 
         // Update uniform texture sampler
@@ -270,6 +271,7 @@ public final class RenderManager {
         shaderManager.createUniform(1, "textureSampler1");
         shaderManager.createUniform(1, "textureSampler2");
         shaderManager.createUniform(1, "position");
+        shaderManager.createUniform(1, "sphereOrientation");
 
         shaderManager.bind(2);
         shaderManager.createUniform(2, "textureSampler");

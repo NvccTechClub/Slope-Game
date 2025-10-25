@@ -1,11 +1,10 @@
 package com.slope.game;
 
-import com.slope.game.utils.BufferModel;
+import org.joml.Math;
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
-import org.joml.Math;
 
-import java.nio.Buffer;
+import com.slope.game.utils.BufferModel;
 
 public class Game extends Core {
     private static final int ALL_PLATFORM_MODELS = 1;
@@ -92,6 +91,11 @@ public class Game extends Core {
         clockBuffer.put(bufferPool[0]);
 
         super.init();
+
+        // Initialize ramp along X and sphere start pose
+        Physics.setSimpleRampAlongX(30f, 0f); // 30° ramp along +X
+        Physics.setPreferredDownhillAxis(new Vector3f(1f, 0f, 0f));
+        Physics.reset(new Vector3f(-5f, 3.1f, 0f), new Vector3f(0f, 0f, 0f));
     }
 
     public void checkMouseActive(){

@@ -1,19 +1,25 @@
 package com.slope.game;
 
-import com.slope.game.utils.TriContainer;
-import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
-import it.unimi.dsi.fastutil.objects.Object2IntMap;
-import org.joml.Matrix4fc;
-import org.joml.Vector2f;
-import org.joml.Vector3f;
-import org.lwjgl.opengl.GL20;
-import org.lwjgl.system.MemoryStack;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.lwjgl.opengl.GL31.*;
-import static org.lwjgl.opengl.GL43.*;
+import org.joml.Matrix4fc;
+import org.joml.Vector2f;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
+import org.lwjgl.opengl.GL20;
+import static org.lwjgl.opengl.GL31.GL_INVALID_INDEX;
+import static org.lwjgl.opengl.GL31.glGetUniformBlockIndex;
+import static org.lwjgl.opengl.GL31.glUniformBlockBinding;
+import static org.lwjgl.opengl.GL43.GL_SHADER_STORAGE_BLOCK;
+import static org.lwjgl.opengl.GL43.glGetProgramResourceIndex;
+import static org.lwjgl.opengl.GL43.glShaderStorageBlockBinding;
+import org.lwjgl.system.MemoryStack;
+
+import com.slope.game.utils.TriContainer;
+
+import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 
 public class ShaderManager implements IGraphics {
     private static final int BUFFER_SIZE = 1024;
@@ -67,6 +73,10 @@ public class ShaderManager implements IGraphics {
             GL20.glUniformMatrix4fv(uniforms.getOrDefault(name,-1), false,
                 value.get(stack.mallocFloat(16)));
         }
+    }
+
+    public void setVec4Uniform(CharSequence name, Vector4f value) {
+        GL20.glUniform4f(uniforms.getOrDefault(name, -1), value.x, value.y, value.z, value.w);
     }
 
     public void setIntUniform(CharSequence name, int value) {
