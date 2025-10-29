@@ -15,6 +15,7 @@ public class Physics {
 
     private static final Vector3f spherePos = new Vector3f(0f, 5f, 0f);
     private static final Vector3f velocity = new Vector3f();
+    private static final Vector3f acceleration = new Vector3f();
     private static final Quaternionf orientation = new Quaternionf();
 
     // Ramp plane: n · x + d = 0, |n| = 1
@@ -116,16 +117,26 @@ public class Physics {
     public static void reset(Vector3f pos, Vector3f vel) {
         spherePos.set(pos);
         velocity.set(vel);
+        acceleration.set(0f, 0f, 0f);
         orientation.identity();
     }
 
     public static Vector3f updateAndGetPosition() {
         float dt = Engine.getMain().getFrameArea();
 
+        Vector3f prevVelocity = new Vector3f(velocity);
+
         velocity.fma(dt, GRAVITY_VEC);   // v += g*dt
         spherePos.fma(dt, velocity);     // p += v*dt
 
         resolveSphereRamp(dt);
+
+        // Compute acceleration including effects of collisions/friction this frame
+        if (dt > 0f) {
+            acceleration.set(velocity).sub(prevVelocity).div(dt);
+        } else {
+            acceleration.set(0f, 0f, 0f);
+        }
 
         // Integrate orientation from planar velocity (approx rolling without slipping)
         Vector3f planarVel = new Vector3f(velocity).fma(-velocity.dot(rampN), rampN);
@@ -142,6 +153,14 @@ public class Physics {
 
     public static Quaternionf getOrientation() {
         return new Quaternionf(orientation);
+    }
+
+    public static Vector3f getVelocity() {
+        return new Vector3f(velocity);
+    }
+
+    public static Vector3f getAcceleration() {
+        return new Vector3f(acceleration);
     }
 
     private static void resolveSphereRamp(float dt) {

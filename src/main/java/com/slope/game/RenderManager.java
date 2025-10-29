@@ -169,6 +169,8 @@ public final class RenderManager {
             shaderManager.setVec2Uniform("iResolution", resolution);
             shaderManager.setVec3Uniform("camPosition", camMatrices.getPosition());
             shaderManager.setVec3Uniform("position", Physics.getPosition());
+            shaderManager.setVec3Uniform("velocity", Physics.getVelocity());
+            shaderManager.setVec3Uniform("acceleration", Physics.getAcceleration());
             org.joml.Quaternionf q = Physics.getOrientation();
             shaderManager.setVec4Uniform("sphereOrientation", new org.joml.Vector4f(q.x, q.y, q.z, q.w));
         }
@@ -271,6 +273,8 @@ public final class RenderManager {
         shaderManager.createUniform(1, "textureSampler1");
         shaderManager.createUniform(1, "textureSampler2");
         shaderManager.createUniform(1, "position");
+        shaderManager.createUniform(1, "velocity");
+        shaderManager.createUniform(1, "acceleration");
         shaderManager.createUniform(1, "sphereOrientation");
 
         shaderManager.bind(2);
