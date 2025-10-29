@@ -1,0 +1,269 @@
+* [33m2ddac14[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31mold-repo/main[m[33m, [m[1;31mold-repo/Physics[m[33m, [m[1;32mPhysics[m[33m)[m update
+* [33md835366[m[33m ([m[1;31mupstream/main[m[33m, [m[1;31mupstream/HEAD[m[33m)[m Update Physics.java
+* [33m7ff7817[m Update Window.java
+* [33m37bfe8e[m[33m ([m[1;31morigin/physics[m[33m)[m updated Window Size
+*   [33mb8e8f45[m Merge pull request #20 from NVCC-Tech-Club/gravityVelocity
+[32m|[m[33m\[m  
+[32m|[m [33m|[m * [33m149eb1a[m[33m ([m[1;31mupstream/gravityVelocity[m[33m)[m update (fixed sphere gravity & mass)
+[32m|[m [33m|[m * [33m154ea38[m update Gravity
+[32m|[m [33m|[m[33m/[m  
+[32m|[m * [33m17c1856[m added gravityVelocity
+[32m|[m[32m/[m  
+* [33m5176d4e[m Update Physics.java
+* [33m96f0674[m Redid Physics
+* [33ma081cc4[m Update ClockBufferGL.java
+* [33m9ff9aff[m Update ObjectLoader.java
+* [33m0ac0d71[m Apply transformations
+* [33md3c82c0[m Update ClockBufferGL.java
+* [33m6d561eb[m Update ClockBufferGL.java
+* [33m714e350[m Alot of thinking
+* [33m16eea57[m Update
+* [33m5cd1992[m Read only cache
+* [33m6440599[m Put and issues fix (Still new to Kotlin)
+* [33m719da78[m Have totalsize
+* [33m47f7e30[m Result
+* [33m6036d72[m Clock
+* [33md8d50a4[m Update BufferModel.kt
+* [33mea452fa[m Update BufferModel.kt
+* [33m9630237[m Buffer Model
+* [33ma0f8d01[m Update
+* [33m465954d[m Rewrite how models are handled
+* [33m962053b[m World Building
+* [33m44a24c3[m Update tower-vertex.glsl
+* [33mbcbb6e6[m Update RenderManager.java
+* [33m2ee10e0[m Fixed Renderer to allow for multiple shaders
+* [33m6a1e68e[m Update RenderManager.java
+* [33mc4240da[m Update For Instancing
+* [33m29be87f[m Add third shader
+* [33mba6db79[m Fixed
+* [33m01dd313[m Update gradle.yml
+* [33m8847186[m Update gradle.yml
+* [33m27214cb[m Update gradle.yml
+*   [33m5db42dd[m Merge pull request #19 from NVCC-Tech-Club/temp
+[35m|[m[36m\[m  
+[35m|[m * [33m21a4913[m Merge pull request #18 from NVCC-Tech-Club/PR
+[35m|[m[35m/[m[1;32m|[m 
+[35m|[m *   [33m95fa87a[m Merge branch 'PR' of https://github.com/NVCC-Tech-Club/SlopeGame into PR
+[35m|[m [1;33m|[m[1;34m\[m  
+[35m|[m [1;33m|[m *   [33ma1e019e[m Merge branch 'main' into PR
+[35m|[m [1;33m|[m [1;35m|[m[35m\[m  
+[35m|[m [1;33m|[m[35m_[m[1;35m|[m[35m/[m  
+[35m|[m[35m/[m[1;33m|[m [1;35m|[m   
+* [1;33m|[m [1;35m|[m [33m0acfb81[m Create remove-branches.yml
+* [1;33m|[m [1;35m|[m [33mdce1b1e[m Move resources to art
+* [1;33m|[m [1;35m|[m [33macc41e4[m Create .gitignore
+* [1;33m|[m [1;35m|[m [33md19f9cb[m Tower
+* [1;33m|[m [1;35m|[m [33mdac1488[m Update sphere-fragment.glsl
+* [1;33m|[m [1;35m|[m [33m16a13a9[m Update
+* [1;33m|[m [1;35m|[m [33m600c0fd[m Update sphere-fragment.glsl
+* [1;33m|[m [1;35m|[m [33ma3b3a33[m New Sphere
+* [1;33m|[m [1;35m|[m [33m6523b72[m Push
+* [1;33m|[m [1;35m|[m   [33m904c156[m Merge branch 'main' of https://github.com/NVCC-Tech-Club/SlopeGame
+[31m|[m[32m\[m [1;33m\[m [1;35m\[m  
+[31m|[m * [1;33m|[m [1;35m|[m [33mbbeffc2[m Average scale of sphere (Commit made from IPhone)
+* [32m|[m [1;33m|[m [1;35m|[m [33m0267399[m Unbind textures to increase performance
+[32m|[m[32m/[m [1;33m/[m [1;35m/[m  
+* [1;33m|[m [1;35m|[m [33m143d17a[m Create LearnOpenGL - Depth testing.pdf
+* [1;33m|[m [1;35m|[m [33mdd9c4d3[m Have resources
+* [1;33m|[m [1;35m|[m [33m96b3ee1[m Add texture to sphere
+* [1;33m|[m [1;35m|[m [33m6687350[m Sources
+* [1;33m|[m [1;35m|[m [33me107db8[m Update sphere-fragment.glsl
+* [1;33m|[m [1;35m|[m [33m8d8a76d[m Update sphere-fragment.glsl
+* [1;33m|[m [1;35m|[m [33me2c9f7e[m Sphere
+* [1;33m|[m [1;35m|[m [33m3dbe100[m Better view
+* [1;33m|[m [1;35m|[m [33m2ce0378[m Sphere
+* [1;33m|[m [1;35m|[m [33m4b56fe9[m Test run
+* [1;33m|[m [1;35m|[m [33mfb95508[m Update
+* [1;33m|[m [1;35m|[m [33m021832f[m New framebuffer updater
+* [1;33m|[m [1;35m|[m [33m7bde2dc[m Update
+* [1;33m|[m [1;35m|[m [33m6333e0f[m Update sphere-fragment.glsl
+* [1;33m|[m [1;35m|[m [33m1dfd39f[m Update
+* [1;33m|[m [1;35m|[m [33m026f2f6[m Better
+* [1;33m|[m [1;35m|[m [33m9bb2763[m Update ObjectLoader.java
+* [1;33m|[m [1;35m|[m [33mb6b958b[m Update ObjectLoader.java
+* [1;33m|[m [1;35m|[m [33m027cea8[m New Screen
+* [1;33m|[m [1;35m|[m   [33mcbf5537[m Merge pull request #16 from Fraexex/playground
+[33m|[m[34m\[m [1;33m\[m [1;35m\[m  
+[33m|[m * [1;33m|[m [1;35m|[m [33md1f5393[m Edit app
+[33m|[m[33m/[m [1;33m/[m [1;35m/[m  
+* [1;33m|[m [1;35m|[m   [33mf777c9e[m Merge pull request #15 from Syren0914/Sphere-fragment(fix)
+[35m|[m[36m\[m [1;33m\[m [1;35m\[m  
+[35m|[m * [1;33m|[m [1;35m|[m [33me744885[m[33m ([m[1;31morigin/Sphere-fragment(fix)[m[33m, [m[1;31mold-repo/Sphere-fragment(fix)[m[33m)[m update
+[35m|[m * [1;33m|[m [1;35m|[m [33mb66b40b[m update
+[35m|[m[35m/[m [1;33m/[m [1;35m/[m  
+[35m|[m * [1;35m/[m [33mdf05da8[m Update ObjectLoader.java
+[35m|[m [1;35m|[m[1;35m/[m  
+[35m|[m * [33m56a35c0[m Update
+[35m|[m[35m/[m  
+* [33md9800bd[m Position
+* [33m252b934[m Ball
+* [33m42f8589[m Stage one of sphere
+* [33mc9a00f3[m Clean screen
+* [33m5a2bd7b[m dirty Link
+* [33mc53f5ef[m Update RenderManager.java
+* [33m70aa31a[m support transparency
+* [33m846789a[m Update ShaderManager
+* [33m60dbf64[m Framebuffer working!
+* [33maf8bc42[m Fixed screen issue
+* [33m11aee1f[m Merge
+*   [33m786592a[m Merge pull request #12 from NVCC-Tech-Club/RayMarch
+[1;31m|[m[1;32m\[m  
+[1;31m|[m *   [33m71c7355[m Merge branch 'main' into RayMarch
+[1;31m|[m [1;33m|[m[1;31m\[m  
+[1;31m|[m [1;33m|[m[1;31m/[m  
+[1;31m|[m[1;31m/[m[1;33m|[m   
+* [1;33m|[m [33m969e971[m Process Inputs
+* [1;33m|[m [33md7fdbb8[m Remove sphere
+* [1;33m|[m [33m9b01476[m Update Screen
+[1;34m|[m * [33mf153398[m Merge
+[1;34m|[m * [33mf0f9271[m Update model mat
+[1;34m|[m * [33m1343d87[m UpdateViewMat
+[1;34m|[m * [33m4d58ba7[m Update to projection
+[1;34m|[m * [33ma725d19[m Remove Model Matrix
+[1;34m|[m [1;34m|[m * [33mbf0b1f8[m[33m ([m[1;31morigin/SphereObject[m[33m, [m[1;31mold-repo/SphereObject[m[33m)[m update
+[1;34m|[m [1;34m|[m * [33m2d9d4b4[m update
+[1;34m|[m [1;34m|[m * [33mcd8d643[m update
+[1;34m|[m [1;34m|[m * [33mf29f243[m update
+[1;34m|[m [1;34m|[m[1;34m/[m  
+[1;34m|[m[1;34m/[m[1;34m|[m   
+* [1;34m|[m [33m9ccc559[m Making Sphere
+* [1;34m|[m [33m76fde95[m Size update
+* [1;34m|[m [33m95f8e91[m Update Model
+* [1;34m|[m [33md32b255[m Make manager, a manager
+* [1;34m|[m [33m874c4ba[m Shaders
+* [1;34m|[m [33mcc53e4d[m Fixed FBO
+* [1;34m|[m [33m3bae28e[m More cleaning
+* [1;34m|[m [33mb6d8773[m Clean up
+* [1;34m|[m [33m0cc4e60[m Update
+* [1;34m|[m [33mca4b1ff[m FrameBuffer
+* [1;34m|[m [33m000f709[m Update ObjectLoader.java
+* [1;34m|[m [33m4e05729[m Transparency
+* [1;34m|[m [33m3f05fe5[m Tehe
+* [1;34m|[m [33m47f5c71[m UI
+* [1;34m|[m [33m6b651ae[m Update Core.java
+* [1;34m|[m [33me44cff0[m Update RenderManager.java
+* [1;34m|[m [33me112dc2[m Update model
+[1;34m|[m[1;34m/[m  
+* [33m4ee8888[m Update
+* [33m4b63f4c[m Update ObjectLoader.java
+* [33m922563a[m Update main-fragment.glsl
+* [33m4216670[m Update Color attribute
+*   [33m0aef334[m Merge pull request #10 from Syren0914/color-channel
+[1;36m|[m[31m\[m  
+[1;36m|[m * [33mf6dd633[m[33m ([m[1;31morigin/color-channel[m[33m, [m[1;31mold-repo/color-channel[m[33m)[m update
+[1;36m|[m[1;36m/[m  
+* [33m4996d26[m Delete src/main/java/com/slope/game/utils/Matrix.kt
+*   [33mbbc7a3a[m Merge pull request #8 from Just-Feeshy/main
+[32m|[m[33m\[m  
+[32m|[m * [33m16dc2a3[m Init
+[32m|[m *   [33mcae27e2[m Merge branch 'main' of https://github.com/NVCC-Tech-Club/SlopeGame
+[32m|[m [34m|[m[32m\[m  
+[32m|[m [34m|[m[32m/[m  
+[32m|[m[32m/[m[34m|[m   
+* [34m|[m [33m0cae126[m Ignore bin
+[35m|[m * [33m42bfda9[m Eddie (Model Matrix class)
+[35m|[m[35m/[m  
+* [33md52b7ad[m Update ObjectLoader.java
+* [33m72f39d8[m Update ObjectLoader.java
+* [33m394f166[m Update ObjectLoader.java
+* [33m67f996d[m Update ObjectLoader.java
+*   [33ma9aebf3[m Merge branch 'main' of https://github.com/NVCC-Tech-Club/SlopeGame
+[36m|[m[1;31m\[m  
+[36m|[m * [33mf13330e[m Line changed
+* [1;31m|[m [33m35a82ee[m Clean Up
+[1;31m|[m[1;31m/[m  
+* [33md7f3333[m Update CameraMatrices.java
+*   [33m40aa81f[m Merge pull request #7 from NVCC-Tech-Club/p1
+[1;32m|[m[1;33m\[m  
+[1;32m|[m *   [33m16e1ac5[m Merge branch 'main' into p1
+[1;32m|[m [1;34m|[m[1;32m\[m  
+[1;32m|[m [1;34m|[m[1;32m/[m  
+[1;32m|[m[1;32m/[m[1;34m|[m   
+* [1;34m|[m [33m123e2a4[m Update main-fragment.glsl
+* [1;34m|[m [33mbaa3173[m New
+* [1;34m|[m   [33ma9c8489[m Merge pull request #6 from NVCC-Tech-Club/p1
+[1;36m|[m[31m\[m [1;34m\[m  
+[1;36m|[m [31m|[m * [33m5b2d426[m Game and CameraMatrices cleanup
+[1;36m|[m [31m|[m * [33mbf5aa75[m Moved all inputs to Game class
+[1;36m|[m [31m|[m[31m/[m  
+[1;36m|[m * [33mc27c26d[m Added Camera movement and multiple textures/models added
+[1;36m|[m * [33m76500de[m Added loadGLTFModel
+[1;36m|[m[1;36m/[m  
+* [33m700f7b4[m Fixed OBJLoader kinda
+* [33m6866b41[m SCP173
+* [33m5da2fe4[m Texture
+* [33mbe767ce[m Model Test
+* [33m4c7320d[m Update Shape.java
+* [33me92cea5[m Update ObjectLoader.java
+* [33md5b2205[m Upload files
+* [33me0de169[m Models
+* [33m991f3ea[m Update
+* [33m2d7d517[m Update CameraMatrices.java
+* [33m7fddff9[m Fixed Texture
+* [33mf40de1e[m Texture Fix
+* [33mc347b4c[m Comm
+* [33me56d8a7[m Update ObjectLoader.java
+* [33m536db48[m Broken textures
+*   [33ma1b1e49[m Merge pull request #4 from NVCC-Tech-Club/p1
+[32m|[m[33m\[m  
+[32m|[m * [33m8d619d2[m Texture Class
+[32m|[m[32m/[m  
+* [33m3287b31[m Update CameraMatrices.java
+* [33mbc0a65b[m Update build.gradle.kts
+* [33mea2e6c7[m Added fundation for texture
+* [33m44d1bd4[m Update Window.java
+* [33m60c9ec5[m Fixed framebuffer sizing with cube
+* [33m9f1e2d7[m Update RenderManager.java
+* [33m0b0acbf[m Add EBO (Element Object Buffers)
+* [33mad4abe6[m Update CameraMatrices.java
+* [33m10151be[m Camera
+* [33mccf7c07[m Fixed Index Issue
+* [33mb52c4f2[m Update Shaders
+* [33md924238[m Create camera.glsl
+* [33me4336f5[m Update Core.java
+* [33mc5a9666[m More Camera
+* [33mbfed848[m Given Rotation Matrix
+* [33m7681d71[m Update CameraMatrices.java
+* [33m826734b[m Update CameraMatrices.java
+* [33mf5a49c2[m Create Contribution.md
+*   [33mb43cd93[m Merge pull request #3 from NVCC-Tech-Club/CompileTest
+[34m|[m[35m\[m  
+[34m|[m * [33m25d013a[m Camera
+[34m|[m * [33mbdb7fcd[m Init
+[34m|[m[34m/[m  
+* [33m09c4278[m Update
+* [33ma1acd90[m Added Kotlin
+* [33md4164e1[m Shader Limits
+* [33m80d91ea[m Yup 2
+* [33m2deaa61[m Yup
+* [33m888a062[m Rename to Fixed Size Queues
+* [33m1a57bd5[m Update Core.java
+* [33m625a4bb[m Update Game.java
+* [33mb3b1e30[m Organize everything and do preparations
+* [33m99313bc[m Cleanup
+* [33mfd2c331[m Added shaders
+* [33mb5b09bf[m Commit
+* [33mc8d230f[m add gitignore
+* [33mbe82c98[m bg color set to white, triangle rendered
+* [33mcd97b5b[m Triangle test #1
+* [33ma5bf237[m Triangle Test #1
+* [33mf49a3ad[m Fixed all the issues
+* [33m12a5696[m Fixed issues with run
+* [33mda8c735[m Update gradle.yml
+* [33m79dfd68[m Workflow Class
+* [33m057f933[m Update gradle.yml
+* [33mf73560b[m Added support for OpenGL
+* [33m90f33cf[m Fixed issues with run workflow
+* [33mc906869[m[33m ([m[1;31morigin/license[m[33m, [m[1;31mold-repo/license[m[33m)[m Update LICENSE.md
+* [33mac6ea24[m Update LICENSE.md
+* [33mf1557a3[m Update README.md
+* [33mc831123[m Run workflow
+* [33m821f511[m Prioritize Engine Class
+* [33m81d2da7[m More comment
+* [33m9504a1e[m Create gradle.yml
+* [33mf9950f7[m Delete .github directory
+* [33m97bfec0[m Comments
+* [33mfc4471d[m Create gradle-publish.yml
+* [33m2174be4[m Window!
+* [33mfb80b7b[m License
+* [33ma5f4957[m Init
