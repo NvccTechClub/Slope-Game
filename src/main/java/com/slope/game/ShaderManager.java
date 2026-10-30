@@ -20,6 +20,7 @@ import com.slope.game.utils.TriContainer;
 
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 
 public class ShaderManager implements IGraphics {
     private static final int BUFFER_SIZE = 1024;
@@ -28,13 +29,23 @@ public class ShaderManager implements IGraphics {
     private final List<TriContainer<Integer, Integer, Integer>> IDs;
     private final Object2IntMap<CharSequence> uniformBlocks;
     private final Object2IntMap<CharSequence> storageBlocks;
-    private final Object2IntMap<CharSequence> uniforms;
+
+    // One location table per program. This used to be a single flat map, so two
+    // programs declaring the same uniform name -- every program here declares
+    // "model" -- overwrote each other's locations. Hash maps rather than array maps:
+    // an array map is a linear scan with a string compare at every probe, and these
+    // are resolved by name once per pass.
+    private final List<Object2IntMap<CharSequence>> uniforms;
+
+    // Which program glUseProgram last selected, so name lookups hit the right table.
+    private int boundProgram;
 
     public ShaderManager() {
         this.IDs = new ArrayList<>();
         this.uniformBlocks = new Object2IntArrayMap<>();
         this.storageBlocks = new Object2IntArrayMap<>();
-        this.uniforms = new Object2IntArrayMap<>();
+        this.uniforms = new ArrayList<>();
+        this.boundProgram = 0;
         createShaderProgram();
 
         if(IDs.get(0).getFirst() == 0) {
@@ -44,6 +55,7 @@ public class ShaderManager implements IGraphics {
 
     public void createShaderProgram() {
         IDs.add(new TriContainer<>(GL20.glCreateProgram(), -1, -1));
+        uniforms.add(new Object2IntOpenHashMap<>());
     }
 
     public void createUniform(CharSequence name) throws Exception {
@@ -57,30 +69,71 @@ public class ShaderManager implements IGraphics {
             throw new Exception("Could not find uniform: " + name);
         }
 
-        uniforms.put(name, location);
+        uniforms.get(programIndex).put(name, location);
+    }
+
+    /**
+     * Resolved location of a uniform in a given program, or -1 if it was never
+     * registered. Call this once at setup and keep the int: the location-taking
+     * setters below skip the name lookup, which is what the per-draw uniforms in
+     * the scene loop use.
+     */
+    public int getUniformLocation(int programIndex, CharSequence name) {
+        return uniforms.get(programIndex).getOrDefault(name, -1);
+    }
+
+    private int location(CharSequence name) {
+        return uniforms.get(boundProgram).getOrDefault(name, -1);
     }
 
     public void setVec2Uniform(CharSequence name, Vector2f value) {
-        GL20.glUniform2f(uniforms.getOrDefault(name, -1), value.x, value.y);
+        setVec2Uniform(location(name), value);
     }
 
     public void setVec3Uniform(CharSequence name, Vector3f value) {
-        GL20.glUniform3f(uniforms.getOrDefault(name, -1), value.x, value.y, value.z);
+        setVec3Uniform(location(name), value);
     }
 
     public void setMatrixUniform(CharSequence name, Matrix4fc value) {
-        try(MemoryStack stack = MemoryStack.stackPush()) {
-            GL20.glUniformMatrix4fv(uniforms.getOrDefault(name,-1), false,
-                value.get(stack.mallocFloat(16)));
-        }
+        setMatrixUniform(location(name), value);
     }
 
     public void setVec4Uniform(CharSequence name, Vector4f value) {
-        GL20.glUniform4f(uniforms.getOrDefault(name, -1), value.x, value.y, value.z, value.w);
+        setVec4Uniform(location(name), value);
+    }
+
+    public void setFloatUniform(CharSequence name, float value) {
+        setFloatUniform(location(name), value);
     }
 
     public void setIntUniform(CharSequence name, int value) {
-        GL20.glUniform1i(uniforms.getOrDefault(name,-1), value);
+        setIntUniform(location(name), value);
+    }
+
+    public void setVec2Uniform(int location, Vector2f value) {
+        GL20.glUniform2f(location, value.x, value.y);
+    }
+
+    public void setVec3Uniform(int location, Vector3f value) {
+        GL20.glUniform3f(location, value.x, value.y, value.z);
+    }
+
+    public void setMatrixUniform(int location, Matrix4fc value) {
+        try(MemoryStack stack = MemoryStack.stackPush()) {
+            GL20.glUniformMatrix4fv(location, false, value.get(stack.mallocFloat(16)));
+        }
+    }
+
+    public void setVec4Uniform(int location, Vector4f value) {
+        GL20.glUniform4f(location, value.x, value.y, value.z, value.w);
+    }
+
+    public void setFloatUniform(int location, float value) {
+        GL20.glUniform1f(location, value);
+    }
+
+    public void setIntUniform(int location, int value) {
+        GL20.glUniform1i(location, value);
     }
 
     public void createVertexShader(String shaderCode) throws Exception {
@@ -142,7 +195,10 @@ public class ShaderManager implements IGraphics {
             return GL_INVALID_INDEX;
         }
 
-        return this.uniformBlocks.computeIfAbsent(name, k -> glGetUniformBlockIndex(programID, name));
+        // Keyed by program as well as name: a block index is per program, and caching
+        // it under the bare name handed program 0's index back for every other program.
+        return this.uniformBlocks.computeIfAbsent(programIndex + ":" + name,
+            k -> glGetUniformBlockIndex(programID, name));
     }
 
     public int getStorageBlock(int programIndex, CharSequence name) {
@@ -152,7 +208,8 @@ public class ShaderManager implements IGraphics {
             return GL_INVALID_INDEX;
         }
 
-        return this.storageBlocks.computeIfAbsent(name, k -> glGetProgramResourceIndex(programID, GL_SHADER_STORAGE_BLOCK, name));
+        return this.storageBlocks.computeIfAbsent(programIndex + ":" + name,
+            k -> glGetProgramResourceIndex(programID, GL_SHADER_STORAGE_BLOCK, name));
     }
 
     public void setUniformBlock(CharSequence name, int binding) {
@@ -165,7 +222,7 @@ public class ShaderManager implements IGraphics {
 
     public void setUniformBlock(int programIndex, CharSequence name, int binding) {
         int programID = this.IDs.get(programIndex).getFirst();
-        int index = this.getUniformBlock(name);
+        int index = this.getUniformBlock(programIndex, name);
 
         if(index != GL_INVALID_INDEX) {
             glUniformBlockBinding(programID, index, binding);
@@ -174,7 +231,7 @@ public class ShaderManager implements IGraphics {
 
     public void setStorageBlock(int programIndex, CharSequence name, int binding) {
         int programID = this.IDs.get(programIndex).getFirst();
-        int index = this.getStorageBlock(name);
+        int index = this.getStorageBlock(programIndex, name);
 
         if (index != GL_INVALID_INDEX) {
             glShaderStorageBlockBinding(programID, index, binding);
@@ -186,6 +243,7 @@ public class ShaderManager implements IGraphics {
     }
 
     public void bind(int programIndex) {
+        this.boundProgram = programIndex;
         GL20.glUseProgram(this.IDs.get(programIndex).getFirst());
     }
 
@@ -225,5 +283,6 @@ public class ShaderManager implements IGraphics {
 
         this.uniformBlocks.clear();
         this.storageBlocks.clear();
+        this.uniforms.clear();
     }
 }

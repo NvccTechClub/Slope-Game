@@ -34,16 +34,12 @@ public class FrameBuffer {
         // Attach texture to FBO
         GL30.glFramebufferTexture2D(GL30.GL_FRAMEBUFFER, GL30.GL_COLOR_ATTACHMENT0, GL11.GL_TEXTURE_2D, texture, 0);
 
-        // Create RBO
-        rbo = GL30.glGenRenderbuffers();
-        GL30.glBindRenderbuffer(GL30.GL_RENDERBUFFER, rbo);
-        GL30.glRenderbufferStorage(GL30.GL_RENDERBUFFER, GL21.GL_DEPTH_COMPONENT32, width, height);
-        GL30.glBindRenderbuffer(GL30.GL_RENDERBUFFER, 0);
+        // Depth goes to a texture, because the screen pass samples it. There used to be
+        // a renderbuffer attached to GL_DEPTH_ATTACHMENT first, which the texture below
+        // then displaced -- a full-resolution depth buffer allocated every resize and
+        // never read by anything.
 
-        // Attach RBO to the depth attachment of our FBO
-        GL30.glFramebufferRenderbuffer(GL30.GL_FRAMEBUFFER, GL30.GL_DEPTH_ATTACHMENT, GL30.GL_RENDERBUFFER, rbo);
-
-        // Create texture to attach to RBO
+        // Create texture for the depth attachment
         depthTexture = GL11.glGenTextures();
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, depthTexture);
         GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL21.GL_DEPTH_COMPONENT32, width, height, 0, GL11.GL_DEPTH_COMPONENT, GL11.GL_FLOAT, (ByteBuffer) null);
@@ -82,8 +78,27 @@ public class FrameBuffer {
     }
 
     public void destroy() {
-        GL30.glDeleteTextures(texture);
-        GL30.glDeleteFramebuffers(fbo);
+        // Every object this class owns, not just two of them. onWindowResize() destroys
+        // and re-inits, so the depth texture used to leak on every resize.
+        if(texture != 0) {
+            GL30.glDeleteTextures(texture);
+            texture = 0;
+        }
+
+        if(depthTexture != 0) {
+            GL30.glDeleteTextures(depthTexture);
+            depthTexture = 0;
+        }
+
+        if(rbo != 0) {
+            GL30.glDeleteRenderbuffers(rbo);
+            rbo = 0;
+        }
+
+        if(fbo != 0) {
+            GL30.glDeleteFramebuffers(fbo);
+            fbo = 0;
+        }
     }
 
     public static void unbind() {

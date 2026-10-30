@@ -21,6 +21,44 @@ public final class TransformUtils {
     }
 
     /**
+     * Projects the model's world-space vertices onto the given axis and returns
+     * {min, max}. Returns {0, 0} if the model or axis is unusable.
+     */
+    public static float[] computeWorldRangeAlong(PropModel model, Vector3f axis) {
+        float[] v = model.getVertices();
+        Vector3f dir = new Vector3f(axis);
+
+        if (dir.lengthSquared() < 1e-9f || v.length < 3) {
+            return new float[] { 0f, 0f };
+        }
+
+        dir.normalize();
+        float min = Float.POSITIVE_INFINITY;
+        float max = Float.NEGATIVE_INFINITY;
+        Vector3f local = new Vector3f();
+        Vector3f world = new Vector3f();
+
+        for (int i = 0; i + 2 < v.length; i += 3) {
+            local.set(v[i], v[i + 1], v[i + 2]);
+            model.getModelMatrix().transformPosition(local, world);
+            float t = world.dot(dir);
+            if (t < min) min = t;
+            if (t > max) max = t;
+        }
+
+        return new float[] { min, max };
+    }
+
+    /**
+     * Computes half the extent of the model's world-space bounds along the given axis.
+     * Used to derive the playable track width from the road geometry itself.
+     */
+    public static float computeWorldHalfExtentAlong(PropModel model, Vector3f axis) {
+        float[] range = computeWorldRangeAlong(model, axis);
+        return (range[1] - range[0]) * 0.5f;
+    }
+
+    /**
      * Centers the given model so its local AABB center ends up at the specified world-space position.
      * Rotation and scale should be set before calling. This method preserves them.
      */

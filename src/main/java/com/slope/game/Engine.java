@@ -16,6 +16,17 @@ public class Engine {
     public static final int FRAMERATE = 120;
     private static final double FRAME_AREA = 1.0 / FRAMERATE;
 
+    /**
+     * Most physics steps one frame may run before the rest of the backlog is thrown away.
+     *
+     * <p>A stall — a garbage collection, alt-tabbing, dragging the window, a breakpoint —
+     * leaves a large pile of accumulated time. Working through all of it takes longer than
+     * the time it represents, which accumulates more time still: the loop falls further
+     * behind the harder it tries to catch up, and the game locks solid. Dropping the
+     * backlog costs a skipped instant; trying to simulate it costs the session.
+     */
+    private static final int MAX_SUBSTEPS = 5;
+
     private Window primaryWindow;
     private IComponentManager game;
     private GLFWErrorCallback errorCallback; // Capture any errors that may arise.
@@ -63,7 +74,9 @@ public class Engine {
         WindowManager.init();
 
         // Setup Window
-        primaryWindow = WindowManager.createMainWindow(0, 0, "Slope Game");
+        Settings settings = Main.getSettings();
+        primaryWindow = WindowManager.createMainWindow(
+                settings.getWindowWidth(), settings.getWindowHeight(), "Slope Game");
         primaryWindow.setFramebufferSizeCall((window, width, height) -> {
             game.onWindowResize(width, height);
         });
@@ -90,8 +103,11 @@ public class Engine {
             accumulatedTime += passedTime / (double) NANOSECOND;
             frameCounter += passedTime;
 
-            while(accumulatedTime > FRAME_AREA) {
+            int steps = 0;
+
+            while(accumulatedTime > FRAME_AREA && steps < MAX_SUBSTEPS) {
                 render = true;
+                steps++;
                 accumulatedTime -= FRAME_AREA;
 
                 if(primaryWindow.shouldClose()) {
@@ -103,6 +119,12 @@ public class Engine {
                 if(frameCounter >= NANOSECOND) {
                     frameCounter = 0;
                 }
+            }
+
+            // Whatever is left belongs to a stall the game cannot usefully replay.
+            // Forget it, so the next frame starts level instead of further behind.
+            if(accumulatedTime > FRAME_AREA) {
+                accumulatedTime = 0.0;
             }
 
             totalTime += passedTime / (float) NANOSECOND;

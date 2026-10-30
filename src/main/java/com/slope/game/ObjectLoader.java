@@ -243,14 +243,13 @@ public class ObjectLoader implements IGraphics {
         int vertexLength = (vertexColors != null) ? vertexColors.limit() : 0;
         int nullVertexLength = (vertexColors == null) ? vectors.limit() : 0;
 
-        final Random r = new Random();
-        final int high = 100;
-        float result = (float)(r.nextInt(high) / (high - 1));
-
+        // No COLOR_0 on this mesh, so fall back to neutral white and let the texture and
+        // the per-prop tint decide the colour. The old fallback divided two ints, so it
+        // was green with the red and blue channels knocked out on nearly every mesh.
         for (int i = 0; i < nullVertexLength; i++) {
-            colors.add(0.0f);
             colors.add(1.0f);
-            colors.add(result);
+            colors.add(1.0f);
+            colors.add(1.0f);
             colors.add(1.0f);
         }
 
@@ -322,8 +321,12 @@ public class ObjectLoader implements IGraphics {
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);  // Horizontal wrap
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);  // Vertical wrap
 
-        // Set texture filtering options (minification and magnification filters)
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
+        // Set texture filtering options (minification and magnification filters).
+        // The minification filter has to name a mipmapped mode or the chain built below
+        // is never sampled: the road recedes to the horizon, so without it every
+        // minified sample lands on a different full-resolution texel and thrashes the
+        // texture cache on top of aliasing.
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
 
         GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, width, height, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
@@ -353,6 +356,9 @@ public class ObjectLoader implements IGraphics {
     }
 
     public int getTextures(int index) { return textures.get(index); }
+
+    /** Index the next loaded texture will land at. */
+    public int getTextureCount() { return textures.size(); }
 
     public int getIndicesCount(int index) {
         return (int) (eboList.get(index) & 0xFFFFFFFFL);
@@ -402,6 +408,11 @@ public class ObjectLoader implements IGraphics {
 
         // Set vertex attribute pointer for the shape
         GL20.glVertexAttribPointer(index, size, GL21.GL_FLOAT, false, 0, 0);
+
+        // Enable it here, while the VAO is bound, so the enable is captured as part of
+        // the VAO's state. The draw loop then needs nothing but glBindVertexArray,
+        // instead of re-enabling and re-disabling all three attributes per draw call.
+        GL20.glEnableVertexAttribArray(index);
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
     }
 

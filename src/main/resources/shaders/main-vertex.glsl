@@ -7,6 +7,8 @@ layout(location = 2) in vec4 inColor;
 layout(std140) uniform CameraMatrices {
     mat4 projectionMatrix;
     mat4 viewMatrix;
+    mat4 invProjectionMatrix;
+    mat4 invViewMatrix;
     float nearPlane;
     float farPlane;
 } CamMatrix;
